@@ -27,19 +27,36 @@ export const useMergeLink = ({
     !error &&
     isLinkTokenDefined(config);
 
+  const onKeydown = useCallback((e: KeyboardEvent) => {
+    if (
+      e.key === 'Escape' &&
+      typeof window.MergeLink.closeLink === 'function'
+    ) {
+      window.MergeLink.closeLink();
+    }
+  }, []);
+
   useEffect(() => {
     if (isReadyForInitialization && window.MergeLink) {
       window.MergeLink.initialize({
         ...config,
         shouldSendTokenOnSuccessfulLink,
         onReady: () => setIsReady(true),
+        onExit: () => {
+          window.removeEventListener('keydown', onKeydown);
+          config.onExit?.();
+        }
       });
+
+      return () => window.removeEventListener('keydown', onKeydown);
     }
   }, [isReadyForInitialization, config]);
 
   const open = useCallback(() => {
     if (window.MergeLink) {
       window.MergeLink.openLink(config);
+      // Close Link on esc key press
+      window.addEventListener('keydown', onKeydown);
     }
   }, [config]);
 

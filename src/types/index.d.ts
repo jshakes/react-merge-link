@@ -21,6 +21,7 @@ export interface MergeLink {
     ) => void;
   }) => void;
   openLink: (config: UseMergeLinkProps) => void;
+  closeLink: () => void;
 }
 
 export interface TenantConfig {
@@ -43,7 +44,6 @@ export interface UseMergeLinkProps {
 }
 
 export interface InitializeProps extends UseMergeLinkProps {
-  linkToken: string;
   onReady?: () => void;
 }
 
