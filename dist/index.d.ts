@@ -1,0 +1,1 @@
+export { useMergeLink } from './useMergeLink';
