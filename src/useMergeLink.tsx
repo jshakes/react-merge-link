@@ -44,16 +44,21 @@ export const useMergeLink = ({
         onReady: () => setIsReady(true),
         onExit: () => {
           window.removeEventListener('keydown', onKeydown);
+          console.log('undoing the thing!!');
           config.onExit?.();
         }
       });
 
-      return () => window.removeEventListener('keydown', onKeydown);
+      return () => {
+        console.log('unmounting!!');
+        window.removeEventListener('keydown', onKeydown);
+      }
     }
   }, [isReadyForInitialization, config]);
 
   const open = useCallback(() => {
     if (window.MergeLink) {
+      console.log('doing the thing!!');
       window.MergeLink.openLink(config);
       // Close Link on esc key press
       window.addEventListener('keydown', onKeydown);
