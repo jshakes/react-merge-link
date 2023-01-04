@@ -28,9 +28,9 @@ export const useMergeLink = ({
     isLinkTokenDefined(config);
 
   const onKeydown = useCallback((e: KeyboardEvent) => {
+    console.log(e.key)
     if (
-      e.key === 'Escape' &&
-      typeof window.MergeLink.closeLink === 'function'
+      e.key === 'Escape'
     ) {
       window.MergeLink.closeLink();
     }
